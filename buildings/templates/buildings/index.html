@@ -1,0 +1,31 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Building change detection</title>
+  <link rel="stylesheet" href="{% static 'buildings/app.css' %}">
+  <script defer src="{% static 'buildings/app.js' %}"></script>
+</head>
+<body><main>
+  <h1>Building change detection</h1>
+  <p>Select the earlier and latest images from your computer. RGB GeoTIFF .tif files, up to 50 MB each.</p>
+  <form id="compare-form" enctype="multipart/form-data">
+    <label>Old image<input id="old-file" type="file" name="old_image" accept=".tif" required></label>
+    <label>New image<input id="new-file" type="file" name="new_image" accept=".tif" required></label>
+    <button id="compare">Compare images</button>
+  <button id="sample-pair" type="submit" formnovalidate>Try sample images</button>
+  </form>
+  <p id="status" role="status" aria-live="polite">Compare two aerial TIFFs to highlight newly detected buildings.</p>
+  <p id="details" role="status"></p>
+  <a id="download" hidden download="building-changes.json">Download result JSON</a>
+  <section aria-label="Image comparison">
+    <figure><figcaption>Old image <small id="alignment-label">Original preview</small></figcaption><img id="old-image" src="/sample/earlier.png" alt="Earlier aerial image"></figure>
+    <figure><figcaption>New image <small>Outlined in cyan · New buildings</small></figcaption>
+      <svg id="latest" viewBox="0 0 1000 1000" role="img" aria-label="New aerial image and detected building polygons">
+        <image id="new-image" href="/sample/latest.png" width="1000" height="1000"></image>
+        <g id="footprints"></g>
+      </svg>
+    </figure>
+  </section>
+</main></body></html>
